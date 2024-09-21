@@ -23,7 +23,7 @@ namespace ProductivityBook.API.Features.TaskFeature.Commands
         {
             var task = request.Adapt<TaskEntity>();
 
-            _context.Tasks.Add(task);
+            await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
 
             return task.Adapt<TaskDto>();

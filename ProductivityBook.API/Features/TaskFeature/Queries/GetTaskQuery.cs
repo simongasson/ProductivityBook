@@ -7,7 +7,7 @@ namespace ProductivityBook.API.Features.TaskFeature.Queries
 {
     public class GetTaskQuery : IRequest<TaskDto>
     {
-        public required string Id { get; set; }
+        public required Guid Id { get; set; }
     }
 
     public class GetTaskQueryHandler : IRequestHandler<GetTaskQuery, TaskDto?>
