@@ -1,0 +1,6 @@
+@ProductivityBook.API_HostAddress = http://localhost:5246
+
+GET {{ProductivityBook.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
