@@ -7,7 +7,7 @@ namespace ProductivityBook.API.Features.TaskFeature.Commands
     public class CreateTaskCommand : IRequest<TaskDto>
     {
         public required string Title { get; set; }
-        public bool IsCompleted { get; set; }
+        public bool IsCompleted { get; set; } = false;
     }
 
     public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, TaskDto>
