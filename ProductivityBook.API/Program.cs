@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ProductivityBook.API.Features.TaskFeature;
+using ProductivityBook.API.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Allow CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -17,8 +14,7 @@ builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
-// Add DbContext with connection string
-builder.Services.AddDbContext<TaskDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
@@ -35,6 +31,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.EnsureCreated();
+    }
 }
 
 app.UseHttpsRedirection();

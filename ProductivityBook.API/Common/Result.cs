@@ -13,12 +13,11 @@ namespace ProductivityBook.API.Common
             Error = error;
         }
 
+        public bool IsFailure => !IsSuccess;
+
         public static Result Success() => new Result(true, null);
 
-        public static Result Failure(string error) => new Result(false, error);
-
-        public static NotFoundResult NotFound(string message) => new NotFoundResult(message);
-
+        public static Result Failure(string? error) => new Result(false, error);
     }
 
     public class Result<T> : Result
@@ -33,11 +32,13 @@ namespace ProductivityBook.API.Common
 
         public static Result<T> Success(T value) => new Result<T>(true, value, null);
 
-        public static new Result<T> Failure(string error) => new Result<T>(false, default!, error);
+        public static new Result<T> Failure(string? error) => new Result<T>(false, default!, error);
+
+        public static NotFoundResult<T> NotFound(string? message) => new NotFoundResult<T>(message);
     }
 
-    public class NotFoundResult : Result
+    public class NotFoundResult<T> : Result<T>
     {
-        public NotFoundResult(string error) : base(false, error) { }
+        public NotFoundResult(string? error) : base(false, default!, error) { }
     }
 }
