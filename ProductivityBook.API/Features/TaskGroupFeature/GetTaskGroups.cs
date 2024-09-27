@@ -51,6 +51,7 @@ namespace ProductivityBook.API.Features.TaskGroupFeature
         public Guid Id { get; set; }
         public DateTimeOffset Date { get; set; }
         public IEnumerable<TaskDto> Tasks { get; set; } = new List<TaskDto>();
+        public bool IsActive { get; set; }
     }
 
     public class TaskDto
