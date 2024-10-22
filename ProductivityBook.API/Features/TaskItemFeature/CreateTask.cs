@@ -26,6 +26,8 @@ namespace ProductivityBook.API.Features.TaskItemFeature
     public class CreateTaskCommand : IRequest<Result<Guid>>
     {
         public required string Title { get; set; }
+
+        public TimeSpan? Duration { get; set; } = null;
     }
 
     public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Result<Guid>>
@@ -50,7 +52,7 @@ namespace ProductivityBook.API.Features.TaskItemFeature
                 await _context.TaskGroups.AddAsync(taskGroup);
             }
 
-            var createTaskResponse = TaskItem.Create(taskGroup, request.Title);
+            var createTaskResponse = TaskItem.Create(taskGroup, request.Title, request.Duration);
             if (createTaskResponse.IsFailure)
             {
                 return Result<Guid>.Failure(createTaskResponse.Error);

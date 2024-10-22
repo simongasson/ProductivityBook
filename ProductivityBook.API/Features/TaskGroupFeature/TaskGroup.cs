@@ -5,14 +5,24 @@ namespace ProductivityBook.API.Features.TaskGroupFeature
 {
     public class TaskGroup : BaseEntity
     {
-        public DateTimeOffset Date { get; private set; }
+        public DateTimeOffset Date { get; set; }
 
-        public ICollection<TaskItem> Tasks { get; private set; }
+        public ICollection<TaskItem> Tasks { get; set; }
 
         private TaskGroup()
         {
             Date = DateTimeOffset.Now.Date;
             Tasks = new List<TaskItem>();
+        }
+
+        public static Result<TaskGroup> Create(DateTimeOffset date) {
+            var taskGroup = new TaskGroup
+            {
+                Date = date,
+                Tasks = new List<TaskItem>()
+            };
+
+            return Result<TaskGroup>.Success(taskGroup);
         }
 
         public static Result<TaskGroup> Create()

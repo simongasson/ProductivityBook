@@ -14,23 +14,24 @@ namespace ProductivityBook.API.Features.TaskItemFeature
         }
 
         [HttpPut("{taskId}/completion")]
-        public async Task<ActionResult> UpdateTaskCompletionStatus(Guid taskId, bool isCompleted)
+        public async Task<ActionResult> UpdateTaskCompletionStatus(Guid taskId, UpdateTaskCompletionStatusCommand command)
         {
-            var result = await _mediator.Send(new UpdateTaskCompletionStatusCommand(taskId, isCompleted));
+            command.SetTaskId(taskId);
+            var result = await _mediator.Send(command);
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
     }
 
     public class UpdateTaskCompletionStatusCommand : IRequest<Result>
     {
-        public Guid TaskId { get; }
-        public bool IsCompleted { get; }
+        public Guid TaskId { get; private set; }
+        public bool IsCompleted { get; set; }
 
-        public UpdateTaskCompletionStatusCommand(Guid taskId, bool isCompleted)
+        public void SetTaskId(Guid taskId)
         {
             TaskId = taskId;
-            IsCompleted = isCompleted;
         }
+
     }
 
     public class UpdateTaskCompletionStatusCommandHandler : IRequestHandler<UpdateTaskCompletionStatusCommand, Result>

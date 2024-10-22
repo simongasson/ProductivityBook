@@ -59,5 +59,7 @@ namespace ProductivityBook.API.Features.TaskGroupFeature
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public bool IsCompleted { get; set; }
+        public TimeSpan? Duration { get; set; }
+        public TimeSpan? TimeSpent { get; set; }
     }
 }

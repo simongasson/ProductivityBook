@@ -18,7 +18,7 @@ namespace ProductivityBook.API.Features.TaskItemFeature
             IsCompleted = false;
         }
 
-        public static Result<TaskItem> Create(TaskGroup taskGroup, string title)
+        public static Result<TaskItem> Create(TaskGroup taskGroup, string title, TimeSpan? duration = null)
         {
             if (taskGroup == null)
                 return Result<TaskItem>.Failure("Task group is required.");
